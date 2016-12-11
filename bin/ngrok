@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Starting ngrok tunnel to port ${PORT}"
+ngrok http ${PORT}

@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.envrc
+dump.rdb
+.DS_Store
+npm-debug.log
+db_ballotbot/
