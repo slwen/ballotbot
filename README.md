@@ -40,7 +40,7 @@ $ yarn dev
 This will expose a secure HTTP connection to localhost. You will need to tweak settings in your slack app configuration based on the random URL that ngrok sets up.
 
 ```sh
-$ yarn ngrok
+$ yarn tunnel
 ```
 
 Visit http://127.0.0.1:4040/status for an `ngrok` dashboard.
