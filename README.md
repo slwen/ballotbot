@@ -1,10 +1,10 @@
-> Uncover how everyone really feels with secret ballots in Slack.
-
 ![screenshot](https://raw.githubusercontent.com/slwen/ballotbot/master/avatar.png)
 
-**Call a ballot**
+## Commands
 
-`/ballot candidate a, candidate b, candidate c`
+Ballotbot listens for these commands:
+
+> /ballot candidate a, candidate b, candidate c
 
 Comma separate each candidate or voting option and `ballotbot` will take care of the rest.
 
@@ -18,6 +18,15 @@ Before getting started you will need to set up a new app over at [api.slack.com]
 - direnv
 - yarn
 - [ngrok](https://ngrok.com/) `npm i -g ngrok`
+
+#### Environment
+
+```
+export CLIENT_ID=<slack-client-id>
+export CLIENT_SECRET=<slack-app-secret>
+export VERIFICATION_TOKEN=<slack-app-verification-token>
+export PORT=4050
+```
 
 #### Start the server:
 
