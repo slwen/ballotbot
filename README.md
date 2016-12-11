@@ -1,21 +1,23 @@
 > Uncover how everyone really feels with secret ballots in Slack.
 
+![screenshot](https://raw.githubusercontent.com/slwen/ballotbot/master/avatar.png)
+
 **Call a ballot**
 
 `/ballot candidate a, candidate b, candidate c`
 
 Comma separate each candidate or voting option and `ballotbot` will take care of the rest.
 
-## Dev Requirements
+## Local Dev
+
+Before getting started you will need to set up a new app over at [api.slack.com](https://api.slack.com/apps/new)
+
+#### Dev Requirements
 
 - Node.js v7.1.0
 - direnv
 - yarn
 - [ngrok](https://ngrok.com/) `npm i -g ngrok`
-
-## Local Dev
-
-Before getting started you will need to set up a new app over at [api.slack.com](https://api.slack.com/apps/new)
 
 #### Start the server:
 
@@ -37,4 +39,4 @@ Visit http://127.0.0.1:4040/status for an `ngrok` dashboard.
 
 #### Installing the app in your slack organisation:
 
-```https://<your-random-ngrok-url>/login```
+Visit `https://<your-random-ngrok-url>/login`
