@@ -182,7 +182,10 @@ controller.on('slash_command', (bot, message) => {
 
   if (message.command === '/ballot') {
     if (message.text === '' || message.text === 'help') {
-      bot.replyPrivate(message, 'Here is some help, only you can see this...')
+      bot.replyPrivate(message, `
+        Add a comma separated list of ballot candidates and ballotbot will take care of the rest.\n
+        For example: /ballot Ruby, Python, Node.js, PHP
+      `)
       return
     }
 
@@ -216,7 +219,7 @@ controller.on('slash_command', (bot, message) => {
               type: 'button',
               confirm: {
                 title: 'Just making sure...',
-                text: 'Close voting and reveal the results?',
+                text: 'End the ballot and reveal the results?',
                 ok_text: 'Yes',
                 dismiss_text: 'No'
               }
