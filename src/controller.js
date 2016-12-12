@@ -16,7 +16,7 @@ const controller = Botkit.slackbot({
 }).configureSlackApp({
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  redirectUri: 'https://slack-ballotbot.herokuapp.com/oauth',
+  // redirectUri: 'https://e0f022ab.ngrok.io/oauth',
   scopes: ['incoming-webhook', 'bot', 'commands']
 })
 
