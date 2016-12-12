@@ -1,4 +1,4 @@
-import Botkit from 'botkit'
+import controller from './controller'
 import forEach from 'lodash/forEach'
 import map from 'lodash/fp/map'
 import orderBy from 'lodash/fp/orderBy'
@@ -15,20 +15,6 @@ if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET || !process.env.PORT ||
   console.log('Error: Specify CLIENT_ID, CLIENT_SECRET, PORT and VERIFICATION_TOKEN in environment')
   process.exit(1)
 }
-
-/*
- * Init slackbot controller.
- */
-const controller = Botkit.slackbot({
-  interactive_replies: true,
-  json_file_store: './db_ballotbot/'
-}).configureSlackApp({
-  clientId: process.env.CLIENT_ID,
-  clientSecret: process.env.CLIENT_SECRET,
-  // redirectUri: `http://localhost:${process.env.PORT}`,
-  redirectUri: 'https://e0f022ab.ngrok.io/oauth',
-  scopes: ['incoming-webhook', 'bot', 'commands']
-})
 
 controller.setupWebserver(process.env.PORT, (err, webserver) => {
   controller.createWebhookEndpoints(controller.webserver)
