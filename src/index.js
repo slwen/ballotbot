@@ -187,15 +187,6 @@ controller.on('slash_command', (bot, message) => {
       return
     }
 
-    const candidateButtons = candidates.map(candidate => {
-      return {
-        name: candidate,
-        text: candidate,
-        value: candidate.toLowerCase(),
-        type: 'button'
-      }
-    })
-
     bot.replyPublicDelayed(message, {
       attachments: [
         {
@@ -204,8 +195,21 @@ controller.on('slash_command', (bot, message) => {
           callback_id: callbackId,
           color: attachmentColor,
           attachment_type: 'default',
+          actions: candidates.map(candidate => {
+            return {
+              name: candidate,
+              text: candidate,
+              value: candidate.toLowerCase(),
+              type: 'button'
+            }
+          })
+        },
+        {
+          text: 'End the ballot and reveal the vote count:',
+          callback_id: callbackId,
+          color: attachmentColor,
+          attachment_type: 'default',
           actions: [
-            ...candidateButtons,
             {
               name: 'endballot',
               text: 'End the ballot',
@@ -216,7 +220,7 @@ controller.on('slash_command', (bot, message) => {
                 title: 'Just making sure...',
                 text: 'End the ballot and reveal the results?',
                 ok_text: 'Yes',
-                dismiss_text: 'No'
+                dismiss_text: 'Not yet'
               }
             }
           ]
