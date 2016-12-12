@@ -1,7 +1,10 @@
 {
-  "name": "forseti",
+  "name": "ballotbot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=7.0.0"
+  },
   "scripts": {
     "dev": "nodemon src/index.js --exec babel-node --presets es2015,stage-2",
     "build": "babel src -d dist --presets es2015,stage-2",
@@ -19,7 +22,7 @@
     "lodash": "^4.17.2",
     "nodemon": "^1.11.0"
   },
-  "author": "ahhhhhh",
+  "author": "Sam Enoka",
   "license": "ISC",
   "description": ""
 }
