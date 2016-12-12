@@ -53,8 +53,8 @@ controller.on('create_bot', (bot, config) => {
       if (err) {
         console.log(err)
       } else {
-        convo.say('I am a bot that has just joined your team')
-        convo.say('You must now /invite me to a channel so that I can be of use!')
+        convo.say('Hi, I\'m ballotbot!')
+        convo.say('/invite me to a channel if you want to ask for help. Otherwise, check out this link to learn more about me: https://github.com/slwen/ballotbot')
       }
     })
   })
@@ -77,7 +77,7 @@ controller.storage.teams.all((err, teams) => {
   })
 })
 
-function endBallot (bot, message, data) {
+function endBallot (bot, message, votes, voters) {
   const countVotes = reduce((prev, curr) => {
     return {
       ...prev,
@@ -94,13 +94,13 @@ function endBallot (bot, message, data) {
     countVotes,
     orderVotesHighestToLowest,
     mapVotesToString
-  )(data.votes)
+  )(votes)
 
   bot.replyInteractive(message, {
     text: ':white_check_mark: Ballot ended successfully. Here\'s the results:',
     attachments: [
       {
-        title: `${data.voters.length} votes collected`,
+        title: `${voters.length} votes collected`,
         text: results.join(''),
         color: attachmentColor
       }
@@ -114,15 +114,18 @@ function endBallot (bot, message, data) {
 controller.on('interactive_message_callback', (bot, message) => {
   const callbackId = message.callback_id
 
-  controller.storage.teams.get(callbackId, (err, data = { votes: [], voters: [] }) => {
+  controller.storage.teams.get(callbackId, (err, data) => {
     if (err) console.log(err)
 
+    const votes = data ? data.votes : []
+    const voters = data ? data.voters : []
+
     if (message.text === callbackId) {
-      endBallot(bot, message, data)
+      endBallot(bot, message, votes, voters)
       return
     }
 
-    if (data.voters.includes(message.user)) {
+    if (voters.includes(message.user)) {
       bot.say({
         text: 'Your vote has already been counted and cannot be changed.',
         channel: message.user
@@ -133,8 +136,8 @@ controller.on('interactive_message_callback', (bot, message) => {
 
     const updates = {
       id: callbackId,
-      votes: [...data.votes, message.text],
-      voters: [...data.voters, message.user],
+      votes: [...votes, message.text],
+      voters: [...voters, message.user],
       channel: message.channel
     }
 
@@ -168,16 +171,19 @@ controller.on('slash_command', (bot, message) => {
 
   if (message.command === '/ballot') {
     if (message.text === '' || message.text === 'help') {
-      bot.replyPrivate(message, `
-        Add a comma separated list of ballot candidates and ballotbot will take care of the rest.\n
-        For example: /ballot Ruby, Python, Node.js, PHP
-      `)
+      bot.replyPrivate(message, "Add a comma separated list of ballot candidates and I will take care of the rest.\nFor example: `/ballot Ruby, Python, Node.js, PHP`")
       return
     }
 
     const timeString = new Date().getTime().toString()
-    const candidates = message.text.split(',').map(string => string.trim())
     const callbackId = `${message.team_id}-${message.user_id}-${timeString}`
+    const candidates = message.text.split(',').map(string => string.trim()).filter(string => !!string)
+
+    if (!candidates.length) {
+      bot.replyPrivate(message, "Looks like you didn't provide any candidates... :confused: \nTry separating each candidate with a comma, for example: `/ballot Coke, Pepsi, Dr. Pepper`")
+      return
+    }
+
     const candidateButtons = candidates.map(candidate => {
       return {
         name: candidate,
@@ -234,6 +240,13 @@ controller.hears([
   ]
 
   bot.reply(message, sample(possibleResponses))
+})
+
+controller.hears('help', ['mention', 'direct_mention'], (bot, message) => {
+  bot.reply(message, {
+    mrkdwn: true,
+    text: 'Start by typing /ballot, then add a comma separated list of ballot candidates. I will take care of the rest. For example:\n `/ballot Pizza, Burgers, Chicken, Salad`'
+  })
 })
 
 controller.on(['direct_message'], (bot, message) => {
