@@ -112,6 +112,7 @@ function endBallot (bot, message, votes, voters) {
  * Save the result of a vote.
  */
 controller.on('interactive_message_callback', (bot, message) => {
+  bot.replyAcknowledge()
   const callbackId = message.callback_id
 
   controller.storage.teams.get(callbackId, (err, data) => {
@@ -162,6 +163,8 @@ controller.on('interactive_message_callback', (bot, message) => {
 })
 
 controller.on('slash_command', (bot, message) => {
+  bot.replyAcknowledge()
+
   if (message.token !== process.env.VERIFICATION_TOKEN) return
 
   if (message.channel_name === 'directmessage') {
