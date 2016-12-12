@@ -160,10 +160,10 @@ controller.on('interactive_message_callback', (bot, message) => {
 
       bot.replyInteractive(message, {
         attachments: [
-          ...message.original_message.attachments,
+          message.original_message.attachments[0],
           {
-            title: 'Vote Count:',
-            text: `${updates.voters.length} votes collected`,
+            ...message.original_message.attachments[1],
+            text: `:ballot_box_with_ballot: Votes collected: ${updates.voters.length}`,
             color: attachmentColor
           }
         ]
