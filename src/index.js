@@ -9,7 +9,7 @@ import sample from 'lodash/sample'
 const attachmentColor = '#2e81f6'
 const helpMessage = {
   mrkdwn: true,
-  text: 'Start by typing /ballot, then add a comma separated list of ballot candidates. I will take care of the rest. For example:\n `/ballot Pizza, Burgers, Chicken, Salad`'
+  text: 'Start by typing /ballot, then add a question and list of ballot candidates separated by slashes. I will take care of the rest. For example:\n `/ballot Which is best? Hooli/Pied Piper/Aviato`'
 }
 
 /*
@@ -178,23 +178,27 @@ controller.on('slash_command', (bot, message) => {
 
   if (message.command === '/ballot') {
     if (message.text === '' || message.text === 'help') {
-      bot.replyPrivate(message, "Add a comma separated list of ballot candidates and I will take care of the rest.\nFor example: `/ballot Ruby, Python, Node.js, PHP`")
+      bot.replyPrivate(message, helpMessage)
       return
     }
 
     const timeString = new Date().getTime().toString()
     const callbackId = `${message.team_id}-${message.user_id}-${timeString}`
-    const candidates = message.text.split(',').map(string => string.trim()).filter(string => !!string)
+    const question = message.text.substr(0, message.text.indexOf('?')+1)
+    const candidates = message.text.substr(message.text.indexOf('?')+1)
+      .split('/')
+      .map(candidate => candidate.trim())
+      .filter(candidate => !!candidate)
 
     if (!candidates.length) {
-      bot.replyPrivate(message, "Looks like you didn't provide any candidates... :confused: \nTry separating each candidate with a comma, for example: `/ballot Coke, Pepsi, Dr. Pepper`")
+      bot.replyPrivate(message, `Looks like you didn't provide any candidates... :confused: \n ${helpMessage}`)
       return
     }
 
     bot.replyPublicDelayed(message, {
       attachments: [
         {
-          title: 'Vote and have your say',
+          title: question || 'Vote and have your say',
           text: 'Be sure to vote carefully, your vote will remain anonymous and cannot be changed.',
           callback_id: callbackId,
           color: attachmentColor,
