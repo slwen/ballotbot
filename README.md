@@ -12,6 +12,8 @@ Ballotbot listens for these commands:
 
 Add a question: `Who is better?` and separate each candidate or voting option with a slash: `Schwarzenegger/Stallone/Van Damme`. Let `ballotbot` take care of the rest.
 
+![screenshot](https://raw.githubusercontent.com/slwen/ballotbot/master/screenshot.png)
+
 ## Local Dev
 
 Before getting started you will need to set up a new app over at [api.slack.com](https://api.slack.com/apps/new)
