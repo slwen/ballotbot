@@ -1,12 +1,16 @@
 ![screenshot](https://raw.githubusercontent.com/slwen/ballotbot/master/avatar.png)
 
+Call ballots (silent votes) where voters remain anonymous and results are hidden until the ballot is ended.
+
+Keeping voter identities anonymous encourages people to vote honestly and without fear. Hiding the results until the ballot is ended avoids earlier votes influencing later votes.
+
 ## Commands
 
 Ballotbot listens for these commands:
 
-> /ballot candidate a, candidate b, candidate c
+> /ballot Who is better? Schwarzenegger/Stallone/Van Damme
 
-Comma separate each candidate or voting option and `ballotbot` will take care of the rest.
+Add a question: `Who is better?` and separate each candidate or voting option with a slash: `Schwarzenegger/Stallone/Van Damme`. Let `ballotbot` take care of the rest.
 
 ## Local Dev
 
