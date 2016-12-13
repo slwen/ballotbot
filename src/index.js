@@ -172,13 +172,13 @@ controller.on('slash_command', (bot, message) => {
   if (message.token !== process.env.VERIFICATION_TOKEN) return
 
   if (message.channel_name === 'directmessage') {
-    bot.replyPrivate(message, ':x: I cannot do that. Try calling your ballot in a public channel.')
+    bot.replyPrivateDelayed(message, ':x: I cannot do that. Try calling your ballot in a public channel.')
     return
   }
 
   if (message.command === '/ballot') {
     if (message.text === '' || message.text === 'help') {
-      bot.replyPrivate(message, helpMessage)
+      bot.replyPrivateDelayed(message, helpMessage)
       return
     }
 
@@ -191,7 +191,7 @@ controller.on('slash_command', (bot, message) => {
       .filter(candidate => !!candidate)
 
     if (!candidates.length) {
-      bot.replyPrivate(message, `Looks like you didn't provide any candidates... :confused: \n ${helpMessage}`)
+      bot.replyPrivateDelayed(message, `Looks like you didn't provide any candidates... :confused: \n ${helpMessage}`)
       return
     }
 
