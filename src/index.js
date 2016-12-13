@@ -252,7 +252,9 @@ controller.hears([
     'Vote for the one that will yield more bacon.',
     'Vote for Pedro',
     'It doesn\'t matter, the bots will rise and end it all soon anyway. :robot_face: :bomb:',
-    '¯\\_(ツ)_/¯'
+    '¯\\_(ツ)_/¯',
+    'http://i.imgur.com/5GhJPOb.gif',
+    'Huh.. I thought it was only us robots that were unable to think for ourselves.'
   ]
 
   bot.reply(message, sample(possibleResponses))
