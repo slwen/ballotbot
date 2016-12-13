@@ -7,6 +7,10 @@ import flow from 'lodash/fp/flow'
 import sample from 'lodash/sample'
 
 const attachmentColor = '#2e81f6'
+const helpMessage = {
+  mrkdwn: true,
+  text: 'Start by typing /ballot, then add a comma separated list of ballot candidates. I will take care of the rest. For example:\n `/ballot Pizza, Burgers, Chicken, Salad`'
+}
 
 /*
  * Bomb out if environment is not configured correctly.
@@ -236,7 +240,8 @@ controller.on('slash_command', (bot, message) => {
 
 controller.hears([
   'Which one should I vote for?',
-  'Who should I vote for?'
+  'Who should I vote for?',
+  'What should I vote for?'
 ], ['mention', 'direct_mention'], (bot, message) => {
   const possibleResponses = [
     'https://media.giphy.com/media/wEvMWiQjdEXbW/giphy.gif',
@@ -250,13 +255,15 @@ controller.hears([
 })
 
 controller.hears('help', ['mention', 'direct_mention'], (bot, message) => {
-  bot.reply(message, {
-    mrkdwn: true,
-    text: 'Start by typing /ballot, then add a comma separated list of ballot candidates. I will take care of the rest. For example:\n `/ballot Pizza, Burgers, Chicken, Salad`'
-  })
+  bot.reply(message, helpMessage)
 })
 
 controller.on(['direct_message'], (bot, message) => {
+  if (message.text.toLowerCase() === 'help') {
+    bot.reply(message, helpMessage)
+    return
+  }
+
   const possibleResponses = [
     'I\'m a little busy right now... http://i.imgur.com/aTMLvyA.jpg',
     'https://media.giphy.com/media/w0CPP48tkM6Ag/giphy.gif',
