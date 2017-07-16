@@ -34,6 +34,8 @@ export VERIFICATION_TOKEN=<slack-app-verification-token>
 export PORT=4050
 ```
 
+Save as `.envrc` to make use of direnv.
+
 #### Start the server:
 
 ```sh
@@ -51,6 +53,28 @@ $ yarn tunnel
 
 Visit http://127.0.0.1:4040/status for an `ngrok` dashboard.
 
+#### Other configuration for local testing
+
+In `src/controller.js` set the redirectUri to your local ngrok url, example:
+
+```js
+const controller = Botkit.slackbot({
+  storage: redis,
+  interactive_replies: true,
+  debug: false
+}).configureSlackApp({
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  redirectUri: 'https://foobar.ngrok.io/oauth', // Point to ngrok url
+  scopes: ['incoming-webhook', 'bot', 'commands']
+})
+```
+
+Inside of app setting on slack.com make sure to alter:
+- Interactive Messages > Request URL, e.g. `https://foobar.ngrok.io/slack/receive`
+- OAuth & Permissions > Redirect URL, e.g. `https://foobar.ngrok.io/oauth`
+
+These must be changed to point to ngrok rather than Heroku.
 
 #### Installing the app in your slack organisation:
 
