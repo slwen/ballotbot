@@ -20,7 +20,7 @@ Before getting started you will need to set up a new app over at [api.slack.com]
 
 #### Dev Requirements
 
-- Node.js v7.1.0
+- Node.js v8.1.4
 - direnv
 - yarn
 - [ngrok](https://ngrok.com/) `npm i -g ngrok`

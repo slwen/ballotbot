@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "engines": {
-    "node": ">=7.0.0"
+    "node": ">=8.1.4"
   },
   "scripts": {
     "dev": "nodemon src/index.js --exec babel-node --presets es2015,stage-2",
